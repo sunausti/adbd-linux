@@ -81,7 +81,7 @@ CFLAGS= $(OPT_CFLAGS) $(LOCAL_CFLAGS) $(LOCAL_INCLUDES)
 all: $(LOCAL_MODULE) xdg-adbd
 
 $(LOCAL_MODULE): $(OBJS)
-	${CXX} -fPIC $(CXXFLAGS) $^ -L ../libcutils/*.o ../base/*.o ../libcrypto_utils/*.o -lpthread -lresolv -lcrypto -lssl -lutil -o $@
+	${CXX} -v -fPIC $(CXXFLAGS) $^ -L ../libcutils/*.o ../base/*.o ../libcrypto_utils/*.o -lpthread -lresolv -Wl,-Bstatic -lcrypto  -Wl,-Bdynamic -lssl -lutil -ldl -fno-strict-aliasing -o $@
 	#g++ -fPIC $(CXXFLAGS) $^ -L ../libcutils/*.o ../base/*.o ../libcrypto_utils/*.o -lpthread -lresolv -lcrypto -lssl -lutil -o $@
 
 xdg-adbd: xdg-adbd.c

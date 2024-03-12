@@ -13,7 +13,7 @@ echo 0x18d1 > idVendor
 echo 0x4E26 > idProduct
 
 #Create English strings and add random deviceID
-mkdir strings/0x409
+mkdir -p strings/0x409
 echo 0123459876 > strings/0x409/serialnumber
 
 #Update following if you want to
@@ -21,8 +21,8 @@ echo "Test" > strings/0x409/manufacturer
 echo "Test" > strings/0x409/product
 
 #Create gadget configuration
-mkdir configs/c.1
-mkdir configs/c.1/strings/0x409
+mkdir -p configs/c.1
+mkdir -p configs/c.1/strings/0x409
 echo "Conf 1" > configs/c.1/strings/0x409/configuration
 echo 120 > configs/c.1/MaxPower
 
@@ -35,9 +35,10 @@ ln -s /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/c.1/
 #Start adbd application
 mkdir -p /dev/usb-ffs/adb
 mount -o uid=2000,gid=2000 -t functionfs adb /dev/usb-ffs/adb
-adbd &
+cd -
+./adb/adbd &
 
 #Enable the Gadget
 #Replace "ci_hdrc.0" with your platform UDC driver as found in /sys/class/udc/
-echo 'ci_hdrc.0' > /config/usb_gadget/g1/UDC
+echo 'dwc3.1.auto' > /config/usb_gadget/g1/UDC
 #echo "ci_hdrc.0" > /config/usb_gadget/g1/UDC
